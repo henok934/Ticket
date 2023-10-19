@@ -221,30 +221,81 @@
 		</div>
 
 	</div>
+
+
+	                {% if error %}
+    <div class="success">
+	    <h3 style="color: red; margin-left: 150px;"><b>{{ error }}</b><span style="margin-left:30px;" class="symbol"><b>X</br></span></h3>
+    </div>
+{% endif %}
+
 	<div class="search8">
-					<div class="search_panel active">
+
+						<div class="search_panel active">
 						<form action = "get_route" method = "post" id = "search_form_1" class="search_panel_content d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
-							<div class="search_item">
-								<div>Departure city</div>
-								<input type="text" name = "depcity" class="check_in search_input" placeholder="AddisAbeba">
+
+
+							        <div class="search_item">
+
+
+
+								<style>
+    .departure-city {
+        padding-left: 110px; /* Adjust the value as needed */    }</style>
+
+							<div class="departure-city">Departure city</div>
+							<!--<input type="text" style="margin-left:90px; width: 200px;" name = "depcity" class="check_in search_input">
+							-->
+							<!--
+<select style="width: 200px;"  name="depcity"  style="margin-left: 100px; width: 200px;" id="gender-input" class="check_in search_input" style="text-align: center;" required="Select Departure city." class="check_in search_input">
+							-->
+<select style="width: 200px; margin-left: 100px;" name="depcity" id="gender-input" class="check_in search_input" required="Select Departure city.">
+        <option value=""style="color: green; font-weight: bold;"><h1>Select Departure</h1></option>
+{% if des %}
+        {% for depcity in des %}
+        <!--<option value="{{ depcity.depcity}}">{{ depcity.depcity }}</option>-->
+        <option value="{{ depcity.depcity }}" style="color: blue; font-weight: bold;">{{ depcity.depcity }}</option>
+        {% endfor %}
+    {% endif %}
+</select>
+
+
+
 							</div>
 							<div class="search_item">
 								<div>Destination City</div>
-								<input type="text" name = "descity" class="check_out search_input" placeholder="Dredawa">
+							<!-- <input type="text" name = "descity" class="check_out search_input">
+							<input type="text" style="width: 200px;" name = "descity" class="check_in search_input" oninput="capitalizeFirstLetter(this)">
+						
+<script>
+function capitalizeFirstLetter(input) {
+input.value = input.value.charAt(0).toUpperCase() + input.value.slice(1);
+}
+</script>
+-->
+<select style="width: 200px;" name = "descity" id="gender-input" class="check_in search_input" style="text-align: center;" required="Select Destination city." class="check_in search_input">
+    <option value="" style="color: green; font-weight: bold;">Select Desparture</option>
+    {% if des %}
+        {% for depcity in des %}
+         <option value="{{ depcity.depcity }}" style="color: blue; font-weight: bold;">{{ depcity.depcity }}</option>
+        {% endfor %}
+    {% endif %}
+</select>
+
+
+
 							</div>
 							<div class="search_item">
 							<div>Travel Date</div>
 							<input type="date" class="check_out search_input" name="date" placeholder="date" required>
 							</div>
-							<button class="button search_button">cheeck</button>
+							<button class="button search_button" style="margin-right: 90px;">cheeck</button>
 						</form>
 					</div>
-					<!-- Search Panel -->
 				</div>
 			</div>
 		</div>		
 	</div>
-	<!-- Intro -->
 	<div class="intro">
 		<div class="container">
 			<div class="row">
@@ -253,13 +304,9 @@
 				</div>
 			</div>
 			<div class="row intro_items">
-
-				<!-- Intro Item -->
-
 				<div class="col-lg-4 intro_col">
 					<div class="intro_item">
 						<div class="intro_item_overlay"></div>
-						<!-- Image by https://unsplash.com/@dnevozhai -->
 						<div class="intro_item_background" style="background-image:url(../static/images/intro_1.jpg)"></div>
 						<div class="intro_item_content d-flex flex-column align-items-center justify-content-center">
 						<div class="intro_center text-center">

@@ -156,11 +156,30 @@
       <div class="col">
         <div class="search_panel active">
           <form action="route" method="post" id="search_form_1" class="search_panel_content">
-	   </br></br></br></br></br></br></br</br></br></br></br></br>
-	   </br></br>
+	   </br></br></br></br></br></br></br</br></br></br></br>
+          {% if error %}
+        <div class="error">
+        <h3 style="color: red; margin-left: 80px;"><b>{{ error }}</b><span style="margin-left:30px;" class="symbol">x</span></h3>
+    </div>
+{% endif %}
+
+
+
+
+
+
+
+
+
+	      {% if success %}
+        <div class="success">
+        <h3 style="color: green; margin-left: 80px;"><b>{{ success }}</b><span style="margin-left:30px;" class="symbol">✔</span></h3>
+    </div>
+{% endif %}
+
             <div class="search_item">
               <div style="display: flex; justify-content: center; align-items: center;">
-                <b><h2 style="text-align: center; color: black;">Register Route:</h2></b>
+                <b><h1 style="text-align: center; color: blue;">Register Route</h1></b>
               </div>
 		<table>
                 <tbody>
@@ -326,9 +345,11 @@ function validateside(input) {
       </tr>
     </tbody>
   </table>
+  <!--
   <div style="display: flex; align-items: center;">
     <div style="margin-right: 53px; text-align: right;">Bus ID:</div>
     <input type="text" size="30" name="bus_id" value="" id="busIdInput" maxlength="10" style="text-align: center;" class="check_in search_input"> </div>
+  -->
  <div style="display: flex; justify-content: center; align-items: center;">
  <input type="submit" value="Submit" class="btn btn-primary">
  </div>

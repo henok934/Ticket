@@ -4,7 +4,8 @@ from models import storage
 from models.bus import Bus
 from models.admin import Admin
 from flask import Flask, render_template, request, redirect, url_for, session
-"""import requests"""
+
+
 from flask import Flask, request
 from models.route import Route
 from models.city import City
@@ -12,7 +13,7 @@ from models.ticket import Ticket
 from models.comment import Fedback
 from models.user import User
 from flask import Flask, render_template
-from flask_login import login_required, current_user, login_user
+from flask_login import current_user, login_user
 from uuid import uuid4
 from hashlib import md5
 from sqlalchemy.orm import sessionmaker
@@ -30,6 +31,45 @@ app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 def add_no_cache_header(response):
     response.headers['Cache-Control'] = 'no-store'  # Set the Cache-Control header to 'no-store'
     return response
+
+from flask import Blueprint, render_template, request, flash, redirect, url_for
+from uuid import uuid4
+
+from models import storage
+from models.user import User
+from hashlib import md5
+from flask_login import login_user, login_required, logout_user, current_user
+
+
+auth = Blueprint("auth", __name__)
+
+cache_id = str(uuid4())
+
+@auth.route('/login', methods=['GET', 'POST'], strict_slashes=False)
+def login():
+    if request.method == "POST":
+        data = request.form
+        username = data.get('username')
+        password = md5(data.get('password').encode()).hexdigest()
+        users = storage.all(User).values()
+        user = None
+        for u in users:
+            if u.username == username:
+                user = u
+                break
+        if user:
+            if password == user.password:
+                flash("Logged in successfully", category='success')
+                login_user(user, remember=True)
+                return redirect(url_for('views.profile'))
+            else:
+                flash("Incorrect Password", category='error')
+        else:
+            flash("Incorrect username", category='error')
+    return render_template("login.html", cache_id=cache_id, user=current_user)
+
+
+
 
 @views.route('/root')
 def root():
@@ -77,89 +117,10 @@ def comments():
     for coment in comments:
         conn.close()
     return render_template('comments.html', comments=comments)
-"""
-@app.route('/logedin', methods=['GET', 'POST'])
-def logedin():
-    if request == "post":
-        username = request.form['username']
-        password = request.form['password']
-        role = request.form['role']
-    
-        # Perform authentication logic here
-        if role == 'admin':
-            # Connect to the admin table in the database
-            conn = sqlite3.connect('database.db')
-            cursor = conn.cursor()
-
-            # Query the admin table for the provided username and password
-            cursor.execute("SELECT * FROM admins WHERE username=? AND password=?", (username, password))
-            admin = cursor.fetchone()
-
-            if admin:
-            # Successful authentication, redirect to admin page
-                return redirect('/ad')
-            else:
-                # Invalid credentials, redirect back to login page
-                return redirect('/login')
-        else:
-            # Connect to the user table in the database
-            conn = sqlite3.connect('database.db')
-            cursor = conn.cursor()
-
-            # Query the user table for the provided username and password
-            cursor.execute("SELECT * FROM users WHERE username=? AND password=?", (username, password))
-            user = cursor.fetchone()
-
-            if user:
-                # Successful authentication, redirect to user page
-                return redirect(url_for('profile'))
-            else:
-                # Invalid credentials, redirect back to login page
-                return redirect('/login')
-    return render_template('login.html')
-
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        role = request.form['role']
-
-        # Check if user exists in the database
-        conn = sqlite3.connect('database.db')
-        c = conn.cursor()
-        c.execute("SELECT * FROM users  WHERE username = ? AND password = ? AND role = ?", (username, password, role))
-        c.execute("SELECT * FROM admins  WHERE username = ? AND password = ? AND role = ?", (username, password, role))
-        profile = c.fetchone()
-        conn.close()
-
-        if profile:
-            session['username'] = username
-            session['role'] = role
-            if role == 'user':
-                return redirect(url_for('profile'))
-            elif role == 'admin':
-                return redirect(url_for('ad'))
-        else:
-            return render_template('login.html', error='Invalid username, password, or role')
-
-    return render_template('login.html')
 
 
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        role = request.form['role']
-        # Check if user exists in the database
-        conn = sqlite3.connect('database.db')
-        c = conn.cursor()
-        c.execute("SELECT * FROM users WHERE username = ? AND password = ?", (username, password))
-        user = c.fetchone()
-        conn.close()
-    if user:
-        return redirect(url_for('profile'))
-    else:
-        return render_template('login.html', error='Invalid username or password')
-    return render_template('login.html')
-"""
+
+
 @views.route('/routes')
 def routes():
     conn = sqlite3.connect('database.db')
@@ -187,12 +148,15 @@ def buses():
     buses  = cursor.fetchall()
     for bus in buses:
         conn.close()
-    return render_template('buses.html', buses=buses)
+    return render_template('buses.html', buses=buses) 
+
 
 @views.route('/home')
 @views.route('/')
 def home():
-    return render_template('index.html', user=current_user)
+    raw_cities = storage.all(City)
+    des = [city.to_dict() for city in raw_cities.values()]
+    return render_template('index.html', des=des,user=current_user)
 
 @views.route('/about')
 def about():
@@ -201,15 +165,18 @@ def about():
 
 @views.route('/offers')
 def offers():
-    """"About us page"""
-    return render_template('cheeckrout.html', user=current_user)
+    raw_cities = storage.all(City)
+    des = [city.to_dict() for city in raw_cities.values()]
+    return render_template('cheeckrout.html',des=des, user=current_user)
 
 @views.route('/ticket', methods=['GET', 'POST'], strict_slashes=False)
 @views.route('/ticket')
 def ticket():
     if request.method == 'POST':
         users = storage.all(Ticket).values()
+        """
         user_ids = [user.user_id for user in users]
+        """
         data = request.form
         print(data)
         firstname = data.get('firstname')
@@ -222,9 +189,7 @@ def ticket():
         date = data.get('date')
         plate_no = data.get('plate_no')
         phone = data.get('phone')
-        user_id = data.get('user_id')
     if len(phone) != 10:
-        flash("Please insert a valid phone number")
         return render_template('ticket.html', user=current_user)
     else:
         info = {
@@ -237,12 +202,11 @@ def ticket():
             "price": price,
             "no_seat": no_seat,
             "side_no": side_no,
-            "plate_no": plate_no,
-            "user_id": user_id
+            "plate_no": plate_no
         }
         new_account = Ticket(**info)
         new_account.save()
-        return render_template('ticket.html',user=current_user)
+        return render_template('ticket.html',user=current_user, info=info, success="Ticket Booked Successfully!")
     return render_template('ticket.html', user=current_user)
 
 @views.route('/businsert', methods=['GET', 'POST'], strict_slashes=False)
@@ -258,17 +222,31 @@ def businsert():
         plate_no = data.get('plate_no')
         sideno = data.get('sideno')
         no_seats = data.get('no_seats')
-        if plate_no in plate_nos:
-            flash("this plate no is registored", category="error")
-        elif sideno in sidenos:
-            flash("this sideno is registerd", category="error")
+
+
+        conn = sqlite3.connect('database.db')
+        c = conn.cursor()
+        c.execute("SELECT * FROM buses WHERE plate_no = ?", (plate_no,))
+        bus = c.fetchall()         
+        conn.close()
+
+
+        conn = sqlite3.connect('database.db')
+        c = conn.cursor()
+        c.execute("SELECT * FROM buses WHERE sideno = ?", (sideno,))
+        side_no = c.fetchall()
+        conn.close()
+        if bus:
+            return render_template('Businsert.html', error="plate Number is already Exist!")
+        elif side_no:
+            return render_template('Businsert.html', error="side Number is already Exist!")
         else:
             info = {"plate_no": plate_no, "sideno": sideno, "no_seats": no_seats}
             new_account = Bus(**info)
             new_account.save()
-            flash("ticket booked successfully", category='success')
-            return redirect(url_for('views.businsert'))
+            return render_template('Businsert.html', success=" Bus Registored Successfully")
     return render_template('Businsert.html', user=current_user)
+
 @views.route('/comment', methods=['GET', 'POST'], strict_slashes=False)
 @views.route('/comment')
 def comment():
@@ -290,44 +268,39 @@ def comment():
             info = {"message": message, "email": email, "phone": phone, "name": name}
             new_account = Fedback(**info)
             new_account.save()
-            flash("coment successfully submitted!!", category='success')
-            return redirect(url_for('views.comment'))
+
+            return render_template('comment.html', success="comment successfully submitted!!")
     return render_template('comment.html', user=current_user)
+
+@views.route('/get_ticket', methods=['GET', 'POST'], strict_slashes=False)
+def get_ticket():
+    raw_cities = storage.all(City)
+    des = [city.to_dict() for city in raw_cities.values()]
+
+    if request.method == 'POST':
+        depcity = request.form.get('depcity')  # Get the value of 'depcity' from the form or request data
+        descity = request.form.get('descity')
+        date = request.form.get('date')
+        firstname = request.form.get('firstname')
+        lastname = request.form.get('lastname')
+        conn = sqlite3.connect('database.db')
+        c = conn.cursor()
+        c.execute("SELECT * FROM tickets WHERE depcity = ? AND descity = ? AND date = ? AND firstname = ? AND lastname = ?", (depcity, descity, date, firstname, lastname))
+        ticket = c.fetchall()
+        conn.close()
+
+        if ticket:
+            return render_template('tickets.html', ticket=ticket, success="Your Ticket is:")
+        else:
+            return render_template('getticket.html', error="Try Again. There is no Ticket Booked info for the entered details!")
+
+    # Return a default response if the method is not a POST request
+    return render_template('getticket.html', des=des)
+
+
 @views.route('/route', methods=['GET', 'POST'], strict_slashes=False)
 @views.route('/route')
 def route():
-    """
-    conn = sqlite3.connect('database.db')
-    cursor = conn.cursor()
-    cursor.execute('SELECT * FROM buses')
-    data  = cursor.fetchall()
-    conn.close()
-    conn = sqlite3.connect('database.db')
-    cursor = conn.cursor()
-    cursor.execute('SELECT depcity FROM cities')
-    city  = cursor.fetchall()
-    conn.close()
-    conn = sqlite3.connect('database.db')
-    cursor.execute('SELECT descity FROM cities')
-    des  = cursor.fetchall()
-    conn.close()
-    conn = sqlite3.connect('database.db')
-    cursor = conn.cursor()
-    
-    cursor.execute('SELECT * FROM buses')
-    data = cursor.fetchall()
-
-    print(data)
-
-    cursor.execute('SELECT depcity FROM cities')
-    city = cursor.fetchall()
-
-    cursor.execute('SELECT descity FROM cities')
-    des = cursor.fetchall()
-
-    cursor.close()
-    conn.close()
-    """
     raw_cities = storage.all(City)
     des = [city.to_dict() for city in raw_cities.values()]
     data = []
@@ -342,7 +315,11 @@ def route():
         departure = [route.depcity for route in routes]
         desparture = [route.descity for route in routes]
         dates = [route.date for route in routes]
+        """
         bus_ids = [route.bus_id for route in routes]
+        """
+
+
         print(data)
         descity = data.get('descity')
         depcity = data.get('depcity')
@@ -350,19 +327,38 @@ def route():
         plate_no = data.get('plate_no')
         side_no = data.get('side_no')
         price = data.get('price')
-        bus_id = data.get('bus_id')
         date = data.get('date')
-        if bus_id in bus_ids:
-            flash("The bus is reserved for another route", category="error")
+    
+
+        conn = sqlite3.connect('database.db')
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM routes WHERE date=? AND depcity=? AND descity=? AND plate_no=?", (date, depcity, descity, plate_no))
+        rout = cursor.fetchone()
+
+
+        conn = sqlite3.connect('database.db')
+        cursor = conn.cursor()
+        
+        cursor.execute("SELECT * FROM routes WHERE date=? AND plate_no=? AND side_no=?", (date, plate_no, side_no))
+        bus = cursor.fetchone()
+
+        cursor.execute("SELECT * FROM routes WHERE date=? AND plate_no=?", (date, plate_no))
+        same_date = cursor.fetchone()
+        
+        if same_date:
+            return render_template('route.html', des=des, data=data, error="Bus is already  Reserved for other route!!")
+        elif bus:
+            return render_template('route.html', des=des, data=data, error="Bus is Reserved for other route!!")
+        elif rout:
+            return render_template('route.html', des=des, data=data, error="route already exists!!")
         elif depcity == descity:
-            flash("Departure and Desparture the Same !!!")
+            return render_template('route.html', data=data, error="Desparture and Destination the Same!!")
         else:
-            info = {"depcity": depcity, "side_no": side_no, "price": price, "date": date, "descity": descity, "kilometer": kilometer, "plate_no": plate_no, "bus_id": bus_id}
+            info = {"depcity": depcity, "side_no": side_no, "price": price, "date": date, "descity": descity, "kilometer": kilometer, "plate_no": plate_no}
             new_account = Route(**info)
             new_account.save()
-            flash("Route successfully submitted!", category='success')
-            return redirect(url_for('views.route'))
-    return render_template('route.html',des=des, data=data, user=current_user)
+            return render_template('route.html', data=data,des=des, success="Route successfully submitted!")
+    return render_template('route.html', des=des, data=data)
 
 @views.route('/city', methods=['GET', 'POST'], strict_slashes=False)
 @views.route('/city')
@@ -373,14 +369,14 @@ def city():
         departure = [citiy.depcity for citiy in cities]
         depcity = data.get('depcity')
         if depcity in departure:
-            flash("The depcity is existed!", category="error")
+            return render_template('city.html', error="city already Exist!")
         else:
             info = {"depcity": depcity}
             new_account = City(**info)
             new_account.save()
-            flash("City successfully registered!", category='success')
-            return redirect(url_for('views.city'))
+            return render_template('city.html', success="City successfully registered!!")
     return render_template('city.html')
+
 @views.route('/admin', methods=['GET', 'POST'])
 def admin():
     if request.method == 'POST':
@@ -417,7 +413,6 @@ def admin():
             new_account.save()
             login_user(new_account, remember=True)
             return redirect(url_for('views.home'))
-            return "User Registor Correctlly!"
     return render_template("admin.html", user=current_user)
 @views.route('/registor', methods=['GET', 'POST'], strict_slashes=False)
 @views.route('/')
@@ -437,9 +432,9 @@ def registor():
         gender = data.get('gender')
         username = data.get('username')
         if username in usernames:
-            flash("Username already exists", category="error")
+            return render_template('registor.html',error="email is already exist")
         elif email in emails:
-            flash("Email address already exists", category='error')
+            return render_template('registor.html', error="Email address already exists!")
         elif phone in phones:
             flash("Phone number already exists", category='error')
         else:
@@ -450,17 +445,7 @@ def registor():
             new_account = User(**info)
             new_account.save()
             login_user(new_account, remember=True)
-        
-
-
-        if request.form.get('name') and request.form.get('email'):
-            flash('Registration successful!', 'success')
-        else:
-            flash('Error occurred during registration.', 'error')
-
-        
-
-            return redirect(url_for('views.registor'))
+        return render_template('registor.html', success="User Registor Successfully!")
     return render_template("registor.html", user=current_user)    
 @views.route('/ad')
 @views.route('/')
@@ -497,12 +482,13 @@ def get_route():
         c.execute("SELECT * FROM routes WHERE date = ? AND depcity = ? AND descity = ?", (date, depcity, descity))
         routes = c.fetchall()
         conn.close()
-        
+        raw_cities = storage.all(City)
+        des = [city.to_dict() for city in raw_cities.values()]
         if routes:
-            return render_template('checkroot.html', routes=routes)
+            return render_template('checkroot.html', routes=routes, success="Routes info---")
         else:
-            return render_template('cheeckrout.html')
-    return render_template('cheeckrout.html')
+            return render_template('index.html', des=des,error="Try Again There is no Route this info!")
+    return render_template('cheeckrout.html',des=des)
 
 @views.route('/book', methods=['GET', 'POST'])
 def book():
@@ -511,12 +497,15 @@ def book():
         depcity = request.form['depcity']
         descity = request.form['descity']
 
-        # Check if user exists in database
         conn = sqlite3.connect('database.db')
         c = conn.cursor()
         c.execute("SELECT * FROM routes WHERE date = ? AND depcity = ? AND descity = ? ", (date, depcity, descity))
         routes = c.fetchall()
         conn.close()
+        
+        raw_cities = storage.all(City)
+        des = [city.to_dict() for city in raw_cities.values()]
+
         if routes:
             for route in routes:
                 if isinstance(route, dict):  
@@ -524,9 +513,9 @@ def book():
                     plate_no = route[3]
                     descity = route[4]
                     date = route[7]
-            return render_template('roote.html', routes=routes, success="Has Route book your Ticket!! ")
+            return render_template('roote.html', routes=routes, success="Route info Goto Ticket page!! ")
         else:
-            return render_template('cheeckroutee.html', error='Incorrect depcity or descity or date')
+            return render_template('cheeckroutee.html', error='There is no Travel in this city and date!')
     return render_template('cheeckroutee.html')
 @views.route('/Select', methods=['GET', 'POST'])
 def Select():
@@ -588,10 +577,9 @@ def Select():
             for route in routes:
                 return render_template('ticket.html',kery=kery, wenberkutr=wenberkutr, routes=routes)
         else:
-            return render_template('roote.html')
+            return render_template('roote.html', error="do.nt ticket booked")
     return render_template('roote.html')
 @views.route('/change_password', methods=['GET', 'POST'])
-@login_required
 def change_password():
     if request.method == 'POST':
         # Get the current password and new password from the form
@@ -609,7 +597,6 @@ def change_password():
 
 @views.route('/details')
 def details():
-    """"Details page for hospitals"""
     bus_id = request.args.get('id')
     bus = storage.get(Bus, bus_id)
     route_name = storage.get(Route, bus.route_id).name
@@ -619,54 +606,9 @@ def details():
                            bus=bus,
                            route_name=route_name,
                            number_of_schedules=number_of_schedules)
-"""
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        # Check if user exists in the database
-        conn = sqlite3.connect('database.db')
-        c = conn.cursor()
-        c.execute("SELECT * FROM users WHERE username = ? AND password = ?", (username, password))
-        user = c.fetchone()
-        conn.close()
-        if user:
-            return redirect(url_for('profile'))
-        else:
-            return render_template('login.html', error='Invalid username or password')
-    return render_template('login.html')
-"""
 
 
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
 
-        # Check if user exists in the users table
-        user_conn = sqlite3.connect('database.db')
-        user_c = user_conn.cursor()
-        user_c.execute("SELECT * FROM users WHERE username = ? AND password = ?", (username, password))
-        user = user_c.fetchone()
-        user_conn.close()
-
-        # Check if user exists in the admins table
-        admin_conn = sqlite3.connect('database.db')
-        admin_c = admin_conn.cursor()
-        admin_c.execute("SELECT * FROM admins WHERE username = ? AND password = ?", (username, password))
-        admin = admin_c.fetchone()
-        admin_conn.close()
-
-        if user:
-            return redirect(url_for('profile'))
-        elif admin:
-            return redirect(url_for('ad'))
-        else:
-            return render_template('login.html', error='Invalid username or password')
-    else:
-        return render_template('login.html')
 
 @views.route('/profile')
 def profile():

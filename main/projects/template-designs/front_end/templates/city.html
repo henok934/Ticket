@@ -141,15 +141,34 @@
   width: 300px;
   }
 </style>
-</br></br></br></br></br></br></br></br></br></br></br></br></br></br>
+</br></br></br></br></br></br></br></br></br></br></br></br></br>
 <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
   <div class="search11 d-flex justify-content-center">
     <div class="row">
       <div class="col">
         <div class="search_panel active">
+
+		</br></br></br></br></br></br></br>
           <form action="city" method="post" id="search_form_1" class="search_panel_content">
             <div class="search_item">
 	      </br></br></br></br></br></br></br></br>
+
+
+
+	                       {% if error %}
+    <div class="error">
+        <h3 style="color: red; margin-left: 10px;"><b>{{ error }}</b><span style="margin-left:30px;" class="symbol">x</span></h3>
+    </div>
+{% endif %}
+
+
+	         {% if success %}
+    <div class="success">
+        <h3 style="color: green; margin-left: 10px;"><b>{{ success }}</b><span class="symbol">✔</span></h3>
+    </div>
+{% endif %}
+
+
               <div style="display: flex; justify-content: center; align-items: center; margin-right: 5px;">
 	      <span style="text-align: center; color: blue; display: block; white-space: nowrap; font-size: 40px; margin-left: 230px;"><b>Insert City</b></span>
               </div>

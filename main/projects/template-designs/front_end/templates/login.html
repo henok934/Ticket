@@ -130,15 +130,24 @@
 }
                     
 <form method="post" action="login" id="search_form_1" class="search_panel_content d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start" style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
-  <div class="search_item">
-	  </br></br></br></br></br></br></br></br></br></br></br>
+
+          
+<div class="search_item">
+	 </br></br></br></br></br></br></br></br>
+ </br></br></br>
+		              {% if error %}
+    <div class="success">
+    <h3 style="color: red; margin-left: 150px;"><b>{{ error }}</b><span style="margin-left:30px;" class="symbol">X</span></h3>
+    </div>
+    {% endif %}
+
     <div style="display: flex; align-items: center;">
-  <span style="margin-right: 10px;">Username:</span>
-  <input type="text" size="50" name="username" class="check_out search_input" placeholder="Username" style="display: inline-block;">
+  <span style="margin-right: 7px; display: inline-block;">Username:</span>
+  <input type="text" size="50" name="username" class="check_out search_input" placeholder="Username" style="display: inline-block; width:200px;">
 </div>
-<div style="display: flex; align-items: center;">
+<div style="display: flex;margin-right:200px; align-items: center;">
     <span style="margin-right: 10px; display: inline-block;">Password:</span>
-    <input type="password" name="password" class="check_out search_input" pattern="[A-Za-z0-9]{4,8}" size="50" maxlength="30" required="required">
+    <input type="password" name="password" class="check_out search_input" style="width:200px;" pattern="[A-Za-z0-9]{4,8}" size="50" maxlength="30" required="required">
 </div>
     </br>
     <label for="role">Role:</label>

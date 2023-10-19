@@ -62,7 +62,6 @@
 								<li class="main_nav_item"><a href="offers">cheeck route</a></li>
 								<li class="main_nav_item"><a href="blog.html">news</a></li>
 								<li class="main_nav_item"><a href="comment">comment </a></li>
-								<li class="main_nav_item"><a href="contact.html">contact</a></li>
 							</ul>
 						</div>
 						<div class="content_search ml-lg-0 ml-auto">
@@ -90,7 +89,7 @@
 						</div>
 
 						<form id="search_form" class="search_form bez_1">
-							<input type="search" class="search_content_input bez_1">
+						<input type="search" class="search_content_input bez_1">
 						</form>
 						
 						<div class="hamburger">
@@ -113,25 +112,29 @@
 				<li class="menu_item"><a href="offers">cheeck route</a></li>
 				<li class="menu_item"><a href="blog.html">news</a></li>
 				<li class="menu_item"><a href="comment">comment</a></li>
-				<li class="menu_item"><a href="route">contactt</a></li>
+
 			</ul>
 		</div>
 	</div>
+	</br>
+	</br>
+	</br></br></br>
 
-	</br>
-	</br>
-	</br></br>
-	</br>
-	</br>
-	</br>
-	<!-- Home -->
-	<!-- Contact -->
 	<div class="contact_form_section">
 		<div class="container">
 			<div class="row">
 				<div class="col">
-					<!-- Contact Form -->
 					<div class="contact_form_container">
+
+
+
+
+					                                                                                 {% if success %}
+                                                    <div class="success">
+        <h3 style="color: green; margin-left: 150px;"><b>{{ success }}</b><span style="margin-left:30px;" class="symbol">✔</span></h3>
+    </div>
+{% endif %}
+
 					  <div class="contact_title text-center">get in touch</div>
 					  <form action="comment" method = "post" id="contact_form" class="contact_form text-center">
 					  <input type="text" name = "name" maxlength = "30" id="contact_form_name" class="contact_form_name input_field" placeholder="Name" required="required" data-error="Name is required.">
@@ -143,24 +146,19 @@
 		</div>
 	</div>
 	</br>
-                                </br>
-                                </br>
-                                </br>
-                                </br>
 
 
-				<!-- Footer Column -->
-				<!-- Footer Column -->
-				<!-- Footer Column -->
-	<!-- Copyright -->
+                                </br>
+                                </br>
+                                </br>
+                                </br>
 	<div class="copyright">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-3 order-lg-1 order-2  ">
 					<div class="copyright_content d-flex flex-row align-items-center">
 						<div><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-&copy;<script>document.write(new Date().getFullYear());</script> All rights reserved by <a href="#">Guzo Team</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></div>
+							&copy;<script>document.write(new Date().getFullYear());</script> All rights reserved by <a href="#">Bus_Ticket Team</a></div>
 					</div>
 				</div>
 				<div class="col-lg-9 order-lg-2 order-1">
@@ -172,7 +170,6 @@
 								<li class="footer_nav_item"><a href="offers">check route</a></li>
 								<li class="footer_nav_item"><a href="blog.html">news</a></li>
 								<li class="footer_nav_item"><a href="comment">comment</a></li>
-								<li class="footer_nav_item"><a href="#">contact</a></li>
 							</ul>
 						</div>
 					</div>

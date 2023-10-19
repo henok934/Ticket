@@ -73,6 +73,19 @@
             color: white;
         }
     </style>
+
+
+
+<style>
+        .success {
+            background-color: lightgreen;
+        }
+
+        .error {
+            background-color: red;
+        }
+    </style>
+
 </head>
 <body>
 <div class="super_container">
@@ -174,21 +187,18 @@
 			</ul>
 		</div>
 	</div>
+	</br></br></br></br></br></br></br>
+	</br></br>
+	{% if success %}
+	<div class="success">
+        <h3 style="color: green; margin-left: 150px;"><b>{{ success }}</b><span style="margin-left:30px;" class="symbol">✔</span></h3>
+    </div>
+{% endif %}
 	<!-- Home -->
-
-
-
-
-
-
-
-
-
 <div class="search1">
 								<div class="container fill_height">
 									<div class="row fill_height">
 										<div class="col fill_height">
-											<!-- Search Tabs -->
 											<div class="search_panel active"> 
 
 
@@ -207,45 +217,110 @@
 </br></br>
 <form action="#" method="post" id="search_form_1" class="search_panel_content d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
     <div class="search_item">
-        <div><b><h2 style="color:black;">Register Form</h2></b></div>
-
+        
+	<span style="display: inline-block; white-space: nowrap; margin-left: 300px;"><b><h2 style="color: black; margin: 0;">Register Form </h2></b></span></br></br></br>
+  </b>
         <div style="display: flex; align-items: center;">
-            <span style="margin-right: 10px;">First</span>
+        <span style="margin-right: 10px;margin-left:320px;">First</span>
             <span>name:</span>
             <div>
-                <input type="text" name="fname" class="check_in search_input wide-input" size="30" maxlength="30" style="margin-left: 7px;" size="20" required>           
+<input type="text" size="30" id="firstname" name="fname" maxlength="15" size ="20px" class="check_in search_input wide-input" style="margin-left: 15px; width: 300px; text-align: center; text-transform: capitalize;" oninput="validatedepcity(this)" required="descity is required" class="center-input">
+<span id="error-message" style="color: red; display: none; position: absolute; top: 100%; left: 0;"></span>
+<script>
+function validatedepcity(input) {
+  var value = input.value.trim();
+  var errorMessage = document.getElementById("error-message");
 
+  if (!value.match(/^[a-zA-Z]+$/)) {
+    errorMessage.textContent = "Please enter a character for city.";
+    errorMessage.style.display = "block";
+    input.setCustomValidity("Please enter a character for city.");
+  } else if (value.length < 4) {
+    errorMessage.textContent = "Please enter at least 4 characters.";
+    input.setCustomValidity("Please enter at least 4 characters.");
+    errorMessage.style.display = "block";
+  } else {
+    errorMessage.style.display = "none";
+    input.setCustomValidity("");
+  }
+
+  input.value = value.charAt(0).toUpperCase() + value.slice(1);
+}
+// Display error message when the input field is empty on page load
+document.addEventListener("DOMContentLoaded", function() {
+  var input = document.getElementById("mySelect");
+  var errorMessage = document.getElementById("error-message");
+
+  if (!input.value.trim()) {
+    errorMessage.textContent = "";
+    errorMessage.style.display = "block";
+    input.setCustomValidity("");
+  }
+});
+</script>
+</div>
+</div>
+<div style="display: flex; align-items: center;">
+            <span style="margin-right: 10px;margin-left:320px;">Last</span>
+            <span>name:</span>
+            <div>
+
+<input type="text" size="30" id="firstname" name="lname" maxlength="15" size ="20px" class="check_in search_input wide-input" style="margin-left: 8px; width: 300px; text-align: center; text-transform: capitalize;" oninput="validatedepcity(this)" required="descity is required" class="center-input">
+<span id="error-message" style="color: red; display: none; position: absolute; top: 100%; left: 0;"></span>
+<script>
+function validatedepcity(input) {
+  var value = input.value.trim();
+  var errorMessage = document.getElementById("error-message");
+
+  if (!value.match(/^[a-zA-Z]+$/)) {
+    errorMessage.textContent = "Please enter a character for name.";
+    errorMessage.style.display = "block";
+    input.setCustomValidity("Please enter a character for name.");
+  } else if (value.length < 4) {
+    errorMessage.textContent = "Please enter at least 4 characters.";
+    input.setCustomValidity("Please enter at least 4 characters.");
+    errorMessage.style.display = "block";
+  } else {
+    errorMessage.style.display = "none";
+    input.setCustomValidity("");
+  }
+
+  input.value = value.charAt(0).toUpperCase() + value.slice(1);
+}
+document.addEventListener("DOMContentLoaded", function() {
+  var input = document.getElementById("mySelect");
+  var errorMessage = document.getElementById("error-message");
+
+  if (!input.value.trim()) {
+    errorMessage.textContent = "";
+    errorMessage.style.display = "block";
+    input.setCustomValidity("");
+  }
+});
+</script>
 	</div>
         </div>
         <div style="display: flex; align-items: center;">
-            <span style="margin-right: 10px;">Last</span>
+            <span style="margin-right: 10px;margin-left:320px;">User</span>
             <span>name:</span>
             <div>
-                <input type="text" name="lname" size="30" maxlength="30" style="margin-left: 8px;" class="check_out search_input wide-input" required>
+            <input type="text" name="username" size="30" maxlength="30" style="margin-left: 7px; width:300px;" class="check_out search_input wide-input" size="20" required>
             </div>
         </div>
 
         <div style="display: flex; align-items: center;">
-            <span style="margin-right: 10px;">User</span>
-            <span>name:</span>
-            <div>
-            <input type="text" name="username" size="30" maxlength="30" style="margin-left: 7px;" class="check_out search_input wide-input" size="20" required>
-            </div>
-        </div>
-
-        <div style="display: flex; align-items: center;">
-    <span style="margin-right: 10px;">Password:</span>
+    <span style="margin-right: 10px;margin-left:320px;">Password:</span>
     <div>
-        <input type="password" size="30" maxlength="30" style="margin-left: 7px;" name="password" class="check_out search_input wide-input" maxlength="15" required size="20"> </div>
+        <input type="password" size="30" maxlength="30" style="margin-left: 7px; width:300px;" name="password" class="check_out search_input wide-input" maxlength="15" required size="20"> </div>
 </div>
 <style>
     #gender-input {
         width: 263px; /* Adjust the width value as per your requirement   id="password-input"  */    }
 </style>
 <div style="display: flex; align-items: center; margin-top: 10px;">
-    <span style="margin-right: 10px;">Gender:</span>
+    <span style="margin-right: 10px;margin-left:320px;">Gender:</span>
     <div>
-        <select name="gender" id="gender-input" style="margin-left: 23px;" class="check_out search_input wide-input"  required>
+        <select name="gender" id="gender-input" style="margin-left: 23px; width:300px;" class="check_out search_input wide-input"  required>
             <option value="" disabled selected style="color: white;">Select Gender</option>
             <option value="male" style="color: blue;">Male</option>
             <option value="female" style="color: blue;">Female</option>
@@ -254,9 +329,9 @@
     </div>
 </div>
 <div style="display: flex; align-items: center;">
-    <span style="margin-right: 10px;">Phone:</span>
+    <span style="margin-right: 10px;margin-left:320px;">Phone:</span>
     <div>
-        <input type="text" style="margin-left: 25px;" style="margin-left: 23px;"class="check_out search_input wide-input" size="25" maxlength="10" oninput="validatePhone(this)" pattern="[0-9]+" name="phone" maxlength="10" required>
+    <input type="text" style="margin-left: 25px; width: 300px;" class="check_out search_input wide-input" size="10" maxlength="10" oninput="validatePhone(this)" pattern="[0-9]+" name="phone" maxlength="10" required>
         <div id="phoneError" style="color: red;"></div>
     </div>
 </div>
@@ -281,9 +356,9 @@ function validatePhone(input) {
 }
 </script>
 <div style="display: flex; align-items: center;">
-    <span style="margin-right: 10px;">Email:</span>
+    <span style="margin-right: 10px;margin-left:320px;">Email:</span>
     <div>
-        <input type="email" name="email" style="margin-left: 30px;" class="check_out search_input wide-input" size="25" maxlength="25" oninput="validateEmail(this)" required>
+        <input type="email" name="email" style="margin-left: 30px;width:300px;" class="check_out search_input wide-input" size="25" maxlength="25" oninput="validateEmail(this)" required>
         <div id="emailError" style="color: red;"></div>
     </div>
 </div>
@@ -302,7 +377,9 @@ function validateEmail(input) {
 }
 </script>
 
-        <button class="button search_button">Register</button>
+ <!--<button class="button search_button">Register</button> -->
+ <!--<button class="button search_button" style="margin-left: 110px;">Register</button>-->
+  <button class="button search_button" style="margin-left: 420px;">Register</button>
     </div>
 </form>
 </div>
@@ -310,6 +387,11 @@ function validateEmail(input) {
 </div>
 </div>		
 </div>
+
+
+
+
+
 	<div class="row intro_items">
 		<div class="col-lg-4 intro_col">
 			<div class="intro_item">

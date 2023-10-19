@@ -102,8 +102,7 @@
 			</ul>
 		</div>
 	</div>
-	</br></br></br>
-	</br></br></br></br></br></br></br></br>
+
 {% if routes %}
 {% for route in routes %}
 <!-- <h3 style="color: blue; text-align: right; position: right;"><b style = "color": green;">Travel: </b><b>{{ route[4] }}</b></h3> -->
@@ -138,21 +137,20 @@
   }
 </style>
 </br>
-</br></br>
+</br></br></br></br></br></br></br></br></br></br></br></br></br></br></br>
 <h3 style="display: flex; justify-content: space-between;">
-    <b style="margin-left: 400px; color: purple; font-weight: bold;">Departure City:</b>
-    <input type="text" name="depcity" value="{{ route[4] }}" class="center-input" style="margin-left: 25px; background-color: blue; color: white; font-weight: bold;" readonly>
+    <b style="margin-left: 35px; color: purple; font-weight: bold;">Departure City:</b>
+    <input type="text" name="depcity" value="{{ route[4] }}" class="center-input" style="margin-left: 30px; background-color: blue; color: white; font-weight: bold;" readonly>
 </h3>
 <h3 style="display: flex; justify-content: space-between;">
-<b style="margin-left: 400px; color: purple; font-weight: bold;">Destination City:</b> <input type="text" name="descity" value="{{ route[5] }}" style="margin-left: 10px; background-color: blue; color: white; font-weight: bold;" class="center-input" readonly></h3>
+<b style="margin-left: 40px; color: purple; font-weight: bold;">Destination City:</b> <input type="text" name="descity" value="{{ route[5] }}" style="margin-left: 10px; background-color: blue; color: white; font-weight: bold;" class="center-input" readonly></h3>
 
 <h3 style="display: flex; justify-content: space-between;">
-  <b class="plate-no-label" style="margin-left: 400px; color: purple; font-weight: bold;">Plate N0:</b>
-  <input type="text" class="center-input"  style="margin-left: 102px; background-color: blue; color: white; font-weight: bold;" name="plate_no" value="{{ route[10] }}" class="center-input" readonly>
-</h3>
-<h3 style="display: flex; justify-content: space-between;"><b style="margin-left: 400px; color: purple; font-weight: bold;">Travel Date:</b> <input type="text" style="margin-left: 67px; background-color: blue; color: white; font-weight: bold;" name="date" value="{{ route[3] }}" class="center-input" readonly></h3>  </div>
+  <b class="plate-no-label" style="margin-left: 40px; color: purple; font-weight: bold;">Plate N0:</b>
+  <input type="text" class="center-input"  style="margin-left: 102px; background-color: blue; color: white; font-weight: bold;" name="plate_no" value="{{ route[9] }}" class="center-input" readonly></h3>
+<h3 style="display: flex; justify-content: space-between;"><b style="margin-left: 40px; color: purple; font-weight: bold;">Travel Date:</b> <input type="text" style="margin-left: 67px; background-color: blue; color: white; font-weight: bold;" name="date" value="{{ route[3] }}" class="center-input" readonly></h3>  </div>
   </br>
-  <div style="text-align: center; margin-left: 550px;">
+  <div style="text-align: center; margin-left: 400px;">
     <button class="button search_button">Next</button>
     </br></br></br></br></br></br></br></br>
   </div>
@@ -182,6 +180,9 @@
 {% endif %}
 </br></br></br>
   </br></br></br></br></br></br></br</br>
+
+
+  <!--
   <div class="cta_slider_nav cta_slider_prev">
                                         <svg version="1.1" id="Layer_4" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                                 width="28px" height="33px" viewBox="0 0 28 33" enable-background="new 0 0 28 33" xml:space="preserve">
@@ -264,6 +265,7 @@
 <script src="../static/js/custom.js"></script>
 </body>
 </html>
+-->
   <!--
   <div class="copyright">
 		<div class="container">

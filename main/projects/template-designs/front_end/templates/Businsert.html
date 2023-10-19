@@ -64,13 +64,39 @@
 				</div>
 			</div>	
 		</nav>
-	</header>	
+</header>	
+</br></br></br</br></br></br></br>
+</br></br></br></br>
+
+{% if success %}
+    <div class="success">
+    <h3 style="color: green; margin-left: 150px;"><b>{{ success }}</b><span style="margin-left:30px;" class="symbol">✔</span></h3>
+    </div>
+    {% endif %}
+
+
+
+
+
+
+
 <div class="search12">
+	</br></br></br></br</br>
+	{% if error  %}
+    <div class="error">
+            <!--
+            <h3 style="color: red; margin-left: 150px;"><b>{{ error }}</b><span style="margin-left:30px;" class="symbol"><h2>x</h2></span></h3>
+            -->
+<h3 style="color: red; margin-left: 150px;"><b>{{ error }}</b><span style="margin-left:30px;" class="symbol"><h2>x</h2></span></h3>
+
+
+    </div>
+    {% endif %}
 									<div class="container fill_height">
 									<div class="row fill_height">
 										<div class="col fill_height">
+    <div class="error">
 											<div class="search_panel active">
-
 <form action="#" method="post" id="search_form_1" class="search_panel_content d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
     <div class="search_item">
 
@@ -78,9 +104,7 @@
     #gender-input {
         width: 263px; /* Adjust the width value as per your requirement   id="password-input"  */    }
 </style>
-</br></br></br</br></br></br>
-
-        <div style="white-space: nowrap;"><b><h2 style="color:black;margin-left: 400px;">Insert Bus</h2></b></div>
+        <div style="white-space: nowrap;"><b><h2 style="color:blue;margin-left: 380px;">Insert Bus</h2></b></div>
 
 	   <div style="display: flex; align-items: center;margin-left: 280px;">
     <span style="margin-right: 10px;">Plate_no:</span>

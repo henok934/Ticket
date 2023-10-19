@@ -50,8 +50,8 @@
 						<div class="main_nav_container ml-auto">
 							<ul class="main_nav_list">
 								<li class="main_nav_item"><a href="home">home</a></li>
-								<li class="main_nav_item"><a href="offers">cheeck route</a></li>
 								<li class="main_nav_item"><a href="comment">comment</a></li>
+								  <li class="menu_item"><a href="get_ticket">tickets</a></li>
 								<li class="main_nav_item"><a href="book">book</a></li>
 							<li class="main_nav_item"><a href="logout">logout</a></li>
 							</ul>
@@ -96,7 +96,7 @@
 			<div class="logo menu_logo"><a href="#"><img src="../static/images/logo.png" alt=""></a></div>
 			<ul>
 				<li class="menu_item"><a href="home">home</a></li>
-				<li class="menu_item"><a href="offers">cheeck route</a></li>
+				<li class="menu_item"><a href="get_ticket">show Tickets</a></li>
 				<li class="menu_item"><a href="book">book</a></li>
 				<li class="menu_item"><a href="logout">logout</a></li>
 			</ul>
@@ -111,12 +111,45 @@
     align-items: center;
   }
   .form-row div {
-    margin-right: 10px;
+    margin-right: 40px;
   }
 </style>
+
+
+</br></br></br></br></br></br></br></br>
+{% if success %}
+    <div class="success">
+    <h3 style="color: green; margin-left: 150px;"><b>{{ success }}</b><span style="margin-left:30px;" class="symbol">✔</span></h3>
+    </div>
+{% endif %}
+
+{{info}}
+
+
+
 {% if routes %}
   {% for route in routes %}
+<style>
+    body {
+        background-color: pink;
+    }
 
+    .error {
+        background-color: lightcoral;
+        display: inline-block;
+        padding: 10px;
+        margin-left: 20px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .symbol {
+        background-color: pink;
+        color: black;
+        font-size: 24px;
+        padding: 5px;
+        margin-left: 70px;    }
+</style>
     <h1 style="color: blue; text-align: right; white-space: nowrap;"><b style="color:green;">Travel Date </b><b>{{ route[3] }}</b></h1>
     <div class="search11">
       <div class="container fill_height">
@@ -124,8 +157,12 @@
           <div class="col fill_height">
             <div class="search_panel active">
               <form action="ticket" method="post" id="search_form_1" class="search_panel_content d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
-		  <div class="search_item">
+		      <div class="search_item">
 			  </br></br></br></br></br></br></br>
+
+
+
+			  {{new_account}}
                   <h1 style="color: blue; text-align: right; white-space: nowrap;"><b style="color:green; margin-left: 150px;">From:</b><b> {{ route[4] }}</b> <b style="color:green;">To:</b> <b>{{ route[5] }}</b></h1>
 <style>                  
 #firstname {
@@ -142,8 +179,6 @@ height: 40px;
 	<input type="text" size="30" id="firstname" name="firstname" maxlength="15" style="margin-left: -5px; width: 280px; text-align: center; text-transform: capitalize;" oninput="validatedepcity(this)" required="descity is required" class="center-input">
 
 <span id="error-message" style="color: red; display: none; position: absolute; top: 100%; left: 0;"></span>
-
-
 
 
 
@@ -235,7 +270,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     <input type="text" style="margin-left: 25px;" size="30" id="firstname" onKeyPress="return onlyNum(event)" pattern="[0-9]{10}" style="margin-left: 10px;" name="phone" maxlength="10" required="Phone is required" class="center-input">
 		    -->
 
- <input type="text" style="margin-left: 25px;" size="30" id="firstname" style="margin-left: 10px;" class="check_out search_input wide-input" size="30" maxlength="10" oninput="validatePhone(this)" pattern="[0-9]+" name="phone" maxlength="10" required>
+ <input type="text" style="margin-left: -3px;" size="30" id="firstname" style="margin-left: 10px;" class="check_out search_input wide-input" size="30" maxlength="10" oninput="validatePhone(this)" pattern="[0-9]+" name="phone" maxlength="10" required>
         <div id="phoneError" style="color: red;">
 <script>
 function validatePhone(input) {
@@ -260,11 +295,10 @@ function validatePhone(input) {
 		    </div>
 		    <div style="display: flex; align-items: center; margin-left: 300px;">
 		    <div>Departure:</div>
-                    <input type="text" size="30" id="firstname" name="depcity" value="{{ route[4] }}" placeholder="depcity" maxlength="20" required="descity is required" style="margin-left: -1px;" class="center-input" readonly>		    </div>
+                    <input type="text" size="30" id="firstname" name="depcity" value="{{ route[4] }}" maxlength="20" required="descity is required" style="margin-left: -30px;" class="center-input" readonly>		    </div>
 		    <div style="display: flex; align-items: center; margin-left: 300px;">
                     <div>Desparture:</div>
-                    <input type="text"style="margin-left: -7px;" size="30" name="descity" id="firstname" placeholder="descity" value="{{ route[5] }}" maxlength="20" required="descity is required" class="center-input" readonly>
-		    </div>
+                    <input type="text"style="margin-left: -37px;" size="30" name="descity" id="firstname" placeholder="descity" value="{{ route[5] }}" maxlength="20" required="descity is required" class="center-input" readonly>		    </div>
 		    <div style="display: flex; align-items: center; margin-left: 300px;">
 		    <div style="margin-right: 10px; white-space: nowrap;">Travel Date:</div>
                     <input type="date" style="margin-left: -8px; width: 280px;" size="30" name="date" id="firstname" value="{{ route[3] }}" maxlength="20" required="descity is required" class="center-input" readonly>
@@ -275,35 +309,24 @@ function validatePhone(input) {
 		    </div>
 		    <div style="display: flex; align-items: center; margin-left: 300px;">
                     <div>price:</div>
-                    <input type="text" style="margin-left: 40px;" style="margin-left: 20px;" size="30" maxlength="4" id="firstname" name="price" placeholder="price" value="{{ route[7] }}" maxlength="10" required="price is required" class="center-input" readonly>
+                    <input type="text" style="margin-left: 9px;" size="30" maxlength="4" id="firstname" name="price" placeholder="price" value="{{ route[7] }}" maxlength="10" required="price is required" class="center-input" readonly>
 		    </div>
 		    <div style="display: flex; align-items: center; margin-left: 300px;">
 		    <div>side_no</div>
-		    <input type="text" name="side_no" style="margin-left: 28px;" id="firstname" value ="{{ route[8] }}" size="30" maxlength="10" required="plate_no is required" class="center-input" readonly>
+		    <input type="text" name="side_no" style="margin-left: -4px;" id="firstname" value ="{{ route[8] }}" size="30" maxlength="10" required="plate_no is required" class="center-input" readonly>
 		    </div>
 		    <div style="display: flex; align-items: center; margin-left: 300px;">
 		    <div>plate_no</div>
-                    <input type="text" name="plate_no" style="margin-left: 23px;" id="firstname" value="{{ route[10] }}" placeholder="plate_no" size="30" maxlength="10" required="plate_no is required" class="center-input" readonly>
+                    <input type="text" name="plate_no" style="margin-left: -9px;" id="firstname" value="{{ route[9] }}" size="30" maxlength="10" required="plate_no is required" class="center-input" readonly>
 		    </div>
-
-
-
-
-
-           
-
-
-
-
-
-
-
 		    </div>
+		    <!--
 		    <div style="display: flex; align-items: center; margin-left: 300px;">
                     <div>user_id:</div>
 		    
 		    <input type="text" size = "33" id="firstname" style="margin-left: 35px; width: 500px !important;" name="user_id" value="" maxlength="10" required="user_id is required" class="center-input">
 		    </div>
+		    -->
 
 		    <div style="text-align: center; margin-left: 460px;">
 		    <button class="button search_button">Book</button></br></br>
@@ -427,7 +450,7 @@ function validatePhone(input) {
 				<div class="footer_nav">
 					<ul class="footer_nav_list">
 				<li class="menu_item"><a href="home">home</a></li>
-                                <li class="menu_item"><a href="offers">cheeck route</a></li>
+                                <li class="menu_item"><a href="get_ticket">show tickets</a></li>
                                 <li class="menu_item"><a href="book">book</a></li>
                                 <li class="menu_item"><a href="logout">logout</a></li>
 

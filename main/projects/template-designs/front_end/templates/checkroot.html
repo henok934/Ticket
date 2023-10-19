@@ -104,32 +104,43 @@
                         </ul>
                 </div>
         </div>
-        </br></br></br></br></br></br></br></br></br></br></br></br>
-<h1>Show Route Info</h1>
-    <table border = "1">
+	</br></br></br></br></br></br></br></br></br></br></br></br>
+	<h1 style="margin-left:300px;color:brown;"><b>Show Route Info</b> </h1></br>
+
+	<table border="2">
     <thead>
-  <tr>
-    <th><b><h3>No.</h3></b></th>
-    <th><b><h3>reg date</h3></b></th>
-    <th><b><h3>Id</h3></b></th>
-    <th><b><h3>Travel Date</h3></b></th>
-    <th><b><h3>Departure</h3></b></th>
-    <th><b><h3>Destination</h3></b></th>
-    <th><b><h3>Killometer</h3></b></th>
-    <th><b><h3>Price</h3></b></th>
-    <th><b><h3>side no</h3></b></th>
-    <th><b><h3>bus_id</h3></b></th>
-    <th><b><h3>plate_no</h3></b></th>
-        </tr>
+    <tr style="background-color: white;">
+    <th><h3><b style="color: blue;">No.</b></h3></th>
+    <th><h3><b style="color: blue;">reg date</b></h3></th>
+    <th><h3><b style="color: blue;">Id</b></h3></th>
+    <th><h3><b style="color: blue;">Travel Date</b></h3></th>
+    <th><h3><b style="color: blue;">Departure</b></h3></th>
+    <th><h3><b style="color: blue;">Destination</b></h3></th>
+    <th><h3><b style="color: blue;">Killometer</b></h3></th>
+    <th><h3><b style="color: blue;">Price</b></h3></th>
+    <th><h3><b style="color: blue;">side no</b></h3></th>
+    <th><h3><b style="color: blue;">plate_no</b></h3></th>
+</tr>
     </thead>
-    <tbody>
-        {% for route in routes %}
-      <tr>
-      <td>
-        <ol start = "1">
-                <li><th> {{route[1]}}</th> <th>{{route[0]}}</th>  <th> {{route[3]}}</th> <th>{{route[4]}}</th> <th>{{route[5]}}</th> <th>{{route[6]}}</th> <th> {{route[7]}}</th> <th> {{route[8]}}</th> <th> {{route[9]}}</th> <th> {{route[10]}}</th> </li></ol></td></tr>     {% endfor %}
-    </tbody>
-    </table>
+    
+
+    <tbody style="background-color: magenta;">
+    {% for route in routes %}
+    <tr>
+        <td style="background-color: green;"><h3><b style="color: yellow;">{{ loop.index }}</b></h3></td>
+	<td><h4> <b style="color: green;">{{ route[2] }}</b></h4></td>
+        <td><h4><b style="color: green;">{{ route[0] }}</b></h4></td>
+        <td><h4> <b style="color: green;">{{ route[3] }} </b></h4></td>
+        <td> <h4> <b style="color: green;"> {{ route[4] }} </b></h4></td>
+        <td> <h4> <b style="color: green;"> {{ route[5] }} </b></h4></td>
+        <td> <h4> <b style="color: green;">{{ route[6] }} </b></h4></td>
+        <td> <h4> <b style="color: green;">{{ route[7] }} </b></h4></td>
+        <td> <h4> <b style="color: green;">{{ route[8] }} </b></h4></td>
+        <td> <h4> <b style="color: green;">{{ route[9] }} </b></h4></td>
+    </tr>
+    {% endfor %}
+</tbody>
+</table>
 </br></br></br</br></br>
   </br></br></br>
   <div class="copyright">

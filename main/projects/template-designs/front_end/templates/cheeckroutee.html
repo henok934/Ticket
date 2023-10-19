@@ -146,10 +146,53 @@
 
 
 
-
+<!--
 {% if error %}
 <h1 style="color: red;"><b>{{ error }}<b></h1>
     {% endif %}
+    </br></br></br>
+-->
+<!--
+<style>
+    body {
+        background-color: pink;
+    }
+</style>
+
+{% if error %}
+    <h4 style="color: red;"><b>{{ error }}</b></h4>
+{% endif %}
+<br><br><br>
+<div style="width: 100%; text-align: right;">
+    <span style="font-size: 24px; color: white; background-color: black; padding: 5px;">x</span>
+</div>
+-->
+<style>
+    body {
+        background-color: pink;
+    }
+    
+    .error {
+        display: inline-block;
+        padding: 10px;
+        margin-left: 20px;
+    }
+    
+    .symbol {
+        color: red;
+        font-size: 24px;
+        padding: 5px;
+        margin-left: 20px;
+    }
+</style>
+{% if error %}
+    <div class="error">
+        <h3 style="color: red; margin-left: 70px;"><b>{{ error }} <span class="symbol">x</span></b></h3>
+    </div>
+{% endif %}
+
+
+
 
 
 
@@ -161,9 +204,41 @@
 									<form action="book" method="post" id="search_form_1" class="search_panel_content d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">										    <div class="search_item">
 									<div><h1>From</h1></div>
 									<input type="text" name = "depcity" class="check_in search_input" placeholder="dep-city">
+<!--
+									<select style="width: 200px; margin-left: -30px;" name="depcity" id="gender-input" class="check_in search_input" required="Select Departure city.">
+        <option value=""style="color: green; font-weight: bold;"><h1>Select Departure</h1></option>
+{% if des %}
+        {% for depcity in des %}
+        <!--<option value="{{ depcity.depcity}}">{{ depcity.depcity }}</option>-->
+        <option value="{{ depcity.depcity }}" style="color: blue; font-weight: bold;">{{ depcity.depcity }}</option>
+        {% endfor %}
+    {% endif %}
+</select>
+-->
 									</div>
-									<div class="search_item">													<div><h1>TO</h1></div>													<input type="text" name = "descity" class="check_out search_input" placeholder="des-city">												</div>			<div class="search_item">
-				<div><h1>date<h1></div>													<input type="date" class="check_out search_input" name="date" placeholder="date" required>												</div>
+									<div class="search_item">													<div><h1>TO</h1></div>	
+
+
+										<!--
+									<select style="width: 200px; margin-left: -60px;" name="descity" id="gender-input" class="check_in search_input" required="Select Departure city.">
+        <option value=""style="color: green; font-weight: bold;"><h1>Select Departure</h1></option>
+{% if des %}
+        {% for depcity in des %}
+ 
+        <option value="{{ depcity.depcity }}" style="color: blue; font-weight: bold;">{{ depcity.depcity }}</option>
+        {% endfor %}
+    {% endif %}
+</select>
+
+
+-->
+
+										<input type="text" name = "descity" class="check_out search_input" placeholder="des-city">
+
+
+					
+
+									</div>			<div class="search_item">				<div><h1>Date<h1></div>													<input type="date" class="check_out search_input" name="date" placeholder="date" required>												</div>
 			<button class="button search_button">cheeck</button>											</form>										</div>					
 										<!-- Search Panel -->
 									</div>

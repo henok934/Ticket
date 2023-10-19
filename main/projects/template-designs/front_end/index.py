@@ -2,8 +2,8 @@
 """
 file: index.py
 Desc: A module which starts the web app
-Authors: Teklemariam Mossie, Mulugeta Tadege and kidus Kinde
-Date Created: sep, 2023
+Authors: Teklemariam, Dawit Mulugeta Tdege, and kidus kinde
+Date Created: Sep 18, 2023
 """
 from front_end import app
 
