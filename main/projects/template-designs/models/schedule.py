@@ -1,6 +1,8 @@
 from sqlalchemy import *
 from models.base import Base, BaseModel
 
+
+
 class Schedule(Base, BaseModel):
     __tablename__ = 'schedules'
     plate_no = Column(Integer,nullable=False, unique = True)

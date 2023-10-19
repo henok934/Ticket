@@ -3,12 +3,12 @@ from base import BaseModel
 
 data = [
 {
-"bus_id": 29565,
+"plate_no": 29565,
 "sideno": 3535,
 "noseats": 65
 },
 {
-"bus_id": 29566,
+"plate_no": 29566,
 "sideno": 3537,
 "noseats": 65
 }

@@ -16,9 +16,10 @@ class User(BaseModel, Base, UserMixin):
     gender = Column(String(5),nullable = False)
     phone = Column(Integer,nullable = False)
     email = Column(String(30),nullable = False, unique = True)
-    
-    tickets = relationship("Ticket", backref="users")
 
+    """
+    tickets = relationship("Ticket", backref="users")
+    """
     def __init__(self, *args, **kwargs):
         """Initializes User object with super class constructor"""
         super().__init__(*args, **kwargs)

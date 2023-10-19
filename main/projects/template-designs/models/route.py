@@ -12,7 +12,9 @@ class Route(BaseModel, Base):
     price = Column(Integer, nullable = False)
     side_no = Column(Integer, nullable = False)
     plate_no = Column(Integer, nullable = False)
+    """
     bus_id = Column(String(60), ForeignKey('buses.id'),nullable = False)
+    """
     def __init__(self, *args, **kwargs):
         """Initializes City object with super class constructor"""
         super().__init__(*args, **kwargs)

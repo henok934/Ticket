@@ -2,8 +2,8 @@
 """
 file: base.py
 Desc: Base model which will be shared among other models
-Authors: kidus Kinde,Teklemariam Mossie, and Mulugeta Tadege
-Date Created: sep  27 2023
+Authors: Mulugeta Tadege,Teklemariam Mossie, and Kidus Kinde
+Date Created: Sep  29 2023
 """
 
 

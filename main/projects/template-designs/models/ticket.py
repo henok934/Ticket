@@ -13,7 +13,9 @@ class Ticket(BaseModel, Base):
     price= Column(String(6), nullable=False)
     side_no = Column(String(6), nullable=False)
     plate_no = Column(Integer, nullable=False)
+    """
     user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
+    """
     def __init__(self, *args, **kwargs):
         """Initializes Order object with super class constructor"""
         super().__init__(*args, **kwargs)

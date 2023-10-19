@@ -8,7 +8,7 @@ class Bus(BaseModel, Base):
     sideno = Column(Integer,nullable=False,unique=True)
     no_seats = Column(Integer,nullable=False)
     
-    routeid = relationship("Route", backref="buses")
+    """ routeid = relationship("Route", backref="buses")"""
     """tickets = relationship("Ticket", backref="buses")"""
 
     """tickets = relationship("Ticket", backref="buses")"""
